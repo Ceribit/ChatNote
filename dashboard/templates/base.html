@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    {% load static %}
+    <meta charset="utf-8">
+    <title>NoteChat</title>
+  <link href="{% static 'assets/css/bootstrap.min.css' %}" rel="stylesheet">
+  <link href="{% static 'assets/css/style.css' %}" rel="stylesheet">
+
+  </head>
+
+  <body>
+    <div class="row headbar">
+      <div class="col-md-4 text-center">
+        <h2>ChatNote</h2>
+      </div>
+    </div>
+    {% block content %}
+
+    {% endblock %}
+  </body>
+</html>
