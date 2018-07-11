@@ -1,10 +1,11 @@
-from django.contrib.auth.forms import AuthenticationForm
+from django.contrib.auth.forms import AuthenticationForm, UserCreationForm
 from django.contrib.auth import authenticate, login
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 
 def home(request):
     #if not logged in
     if not request.user.is_authenticated:
+        print('YOU DID NOT LOG IN')
         form = AuthenticationForm()
         if request.method == 'GET':
             return move_home(request)

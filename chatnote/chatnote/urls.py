@@ -20,5 +20,7 @@ from django.urls.conf import include
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include('dashboard.urls')),
+    path('', include('accounts.urls')),
+
     #path('/', notes.home, name='notes'),
 ]
