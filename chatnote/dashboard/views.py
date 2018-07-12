@@ -18,7 +18,11 @@ def home(request):
         return move_home(request)
     else:
         print('You are logged in')
-        return render(request, 'dashboard/home.html')
+        context = {
+            'user' : request.user
+        }
+        print('You are' + context['user'].profile.first_name)
+        return render(request, 'dashboard/home.html', context)
     #if not logged in
 
 def move_home(request):

@@ -4,10 +4,26 @@
   <div class="container">
     <form method="POST">
       {% csrf_token %}
-      {% for field in form %}
+      {% for field in user_form %}
+            {% csrf_token %}
         {{field.errors}}
         <label> {{field.label}} </label>
         <input type="{%if 'Password' in field.label %}password{% else %}input{% endif %}" name="{{field.name}}" class="form-control">
+      {% endfor %}
+      {% for field in profile_form %}
+        {%if not 'Description' in field.label %}
+              {% csrf_token %}
+        {{field.errors}}
+        <label> {{field.label}} </label>
+        <input type={%if 'Email' in field.label%}
+        "email"
+        {%elif 'date' in field.label%}
+        "date"
+        {% else %}
+        "input"
+        {% endif %}
+        name="{{field.name}}" class="form-control">
+        {% endif %}
       {% endfor %}
       <br>
       <button type="submit" class="btn">Sign Up</button>

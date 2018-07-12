@@ -10,10 +10,3 @@ class Note(models.Model):
 
     def __str__(self):
         return self.name + 'by' + user
-
-class Account(models.Model):
-    nickname = models.CharField(max_length=24, blank=True)
-    user = models.ForeignKey(User, on_delete = models.CASCADE)
-    birthdate = models.DateField()
-    def __str__(self):
-        return 'Name: ' + user
