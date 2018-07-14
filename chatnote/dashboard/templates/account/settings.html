@@ -1,0 +1,88 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container">
+  <div class="row">
+    <div class="col-md-5">
+
+      <div class="card mb-4">
+        <div class="card-header">
+          <h5>Account Info</h5>
+        </div>
+        <div class="card-body">
+          <ul>
+            <br>
+            <li>Username: {{user.username}}</li>
+            <br>
+            <li>Password: ************ </li>
+            <br>
+            <li>Email: {{user.profile.email}}</li>
+          </ul>
+          <button type="button" class="btn btn-secondary btn-sm">Change</button>
+        </div>
+        <div class="card-footer">
+        </div>
+      </div>
+
+      <div class="card md-4">
+        <div class="card-header">
+          <h5>Personal Info</h5>
+        </div>
+        <div class="card-body">
+          <form method="POST">
+            {% csrf_token %}
+            <ul>
+              <br>
+              <li>
+                <div class="form-group">
+                  <label>First Name: {{user.profile.first_name}}</label>
+                  <input class="settingsinput" type="text" name="{{profile_form.first_name.name}}" value="">
+                </div>
+              </li>
+              <li>
+                <div class="form-group">
+                  <label>Last Name: {{user.profile.last_name}}</label>
+                  <input class="settingsinput" type="text" name="{{profile_form.last_name.name}}" value="">
+                </div>
+              </li>
+              <li>
+                <label>Date of Birth: {{user.profile.birth_date}}</label>
+              </li>
+
+              <button type="submit" class="btn btn-success btn-sm">Update Profile</button>
+
+            </ul>
+          </form>
+
+        </div>
+        <div class="card-footer">
+        </div>
+      </div>
+    </div>
+    <div class="col-md-5">
+
+      <div class="card mb-4">
+        <div class="card-header">
+          <h5>Display</h5>
+        </div>
+        <div class="card-body">
+          <ul>
+            <br>
+            <li><label>Biography</label> </li>
+            <form method="POST">
+              {% csrf_token %}
+              <textarea name="{{description_form.description.name}}" rows="8" cols="40" value="">{{user.profile.description}}</textarea>
+              <br>
+              <button type="submit" class="btn btn-success btn-sm">Update Description</button>
+            </form>
+        </div>
+        <div class="card-footer">
+        </div>
+      </div>
+
+
+    </div>
+</div>
+
+
+{% endblock %}

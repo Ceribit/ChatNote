@@ -25,3 +25,20 @@ class ProfileForm(forms.ModelForm):
     class Meta:
         model = Profile
         fields = ('first_name', 'last_name', 'email', 'birth_date')
+
+
+class SettingsForm(forms.ModelForm):
+    class Meta:
+        model = Profile
+        fields = ('first_name', 'last_name', 'email', 'birth_date')
+    def __init__(self, *args, **kwargs):
+        super(SettingsForm, self).__init__(*args, **kwargs)
+        self.fields['last_name'].required = False
+        self.fields['first_name'].required = False
+        self.fields['email'].required = False
+        self.fields['birth_date'].required = False
+
+class DescriptionForm(forms.ModelForm):
+    class Meta:
+        model = Profile
+        fields = ('description',)

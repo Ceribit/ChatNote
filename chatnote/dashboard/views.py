@@ -27,4 +27,4 @@ def home(request):
 
 def move_home(request):
     form = AuthenticationForm(request)
-    return render(request, 'registration/login.html', {'form':form})
+    return render(request, 'account/login.html', {'form':form})

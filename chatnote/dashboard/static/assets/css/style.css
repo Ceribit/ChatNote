@@ -1,8 +1,49 @@
 .headbar{
-  background-color: #957bbe;
+  background-color: #7700b3;
   color: white;
+  border: 1px solid black
+}
+
+.vcenter{
+  display: flex;
+  vertical-align: middle
 }
 
 body{
   background-color: #f2f2f2;
+}
+
+html,body {height:100%;}
+
+
+.settingsinput{
+    float: right;
+    margin-right: 15px;
+}
+
+.navbar-left{
+  height:50%;
+  background-color: #e9e9e9;
+  border: 3px solid white;
+}
+
+.fullcard{
+  height:100%;
+  left:1%;
+  border: 1px solid black;
+}
+
+.card-header{
+  color: white;
+  background-color: #bf80ff;
+  border: 1px solid black;
+}
+
+.card-body{
+  border: 1px solid #990099;
+}
+
+.card-footer{
+  border: 1px solid #4d004d;
+  background-color: #f9ecf2;
 }
