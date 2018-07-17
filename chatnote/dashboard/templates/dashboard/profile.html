@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container">
+  {% if not targetuser.username == user.username %}
+  <p>You are viewing {{targetuser.username}}'s profile</p>
+  {% endif %}
+  <div class="col-md-6">
+    <div class="card center-div">
+      <div style="height:40px" class="card-header">
+        <p>Bio:</p>
+      </div>
+      <div class="card-body center-div">
+        <ul>
+          <p>{{targetuser.profile.description}}</p>
+
+        </ul>
+      </div>
+    </div>
+  </div>
+
+</div>
+{% endblock %}

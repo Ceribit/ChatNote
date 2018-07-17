@@ -9,34 +9,47 @@
 
   </head>
 
+<div style="width:100%">
   <body>
     <div style="padding-left: 0;height:1000px" class="container-fluid">
       <div style="padding-left: 50px;" class="row headbar">
-        <div class="col-md-3 text-center" >
+        <div class="col-md-2 text-center" >
           <img style="top:50%; height:40px"src="{% static 'media/siteicon3.png' %}" alt="not here">
+        </div>
+        <div class="col-md-2" >
+
+          <!--  Search Bar -->
+          <form action="{% url 'search' %}" method="GET">
+            {% csrf_token %}
+              <input name="searchquery" type="text" class="searchbar">
+              <button name="searchForm" class="searchbutton">Search</button>
+          </form>
+
         </div>
 
       </div>
       <br>
 
         <div class="card fullcard col-md-1">
+          <br>
           <ul class="nav">
             <li class="active"> <a href="/">Home</a> </li>
+            <li><a href="/profile/{{user.username}}">Profile</a></li>
             <li><a href="/settings">Settings</a></li>
             <li><a href="/logout">Log Out</a></li>
+
           </ul>
         </div>
+        {% block content %}
 
-      {% block content %}
+        {% endblock %}
+      </body>
 
-      {% endblock %}
     </div>
+    <div class="col-md-12 footer">
+      <p> Channote: Created by Ceri</p>
+    </div>
+</div>
 
 
-
-
-
-
-
-  </body>
 </html>
