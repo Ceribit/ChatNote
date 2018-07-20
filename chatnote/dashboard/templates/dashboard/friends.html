@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container">
+  <h4>Friends Page</h4>
+  <div class="card">
+    <div class="card-header">
+      <p>Friends: </p>
+    </div>
+    {% for friend in friends %}
+    <div class="card-body">
+      <div style="padding-left: 5px">
+        <a href="/profile/{{friend.username}}"> {{friend.profile.first_name}} {{friend.profile.last_name}}</a>
+
+      </div>
+    </div>
+    {% endfor %}
+    </div>
+
+</div>
+{% endblock %}

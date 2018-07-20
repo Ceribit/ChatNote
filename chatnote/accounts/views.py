@@ -29,12 +29,6 @@ def signup(request):
     return render(request, 'account/signup.html', context)
 
 
-def update_profile(request, user_id):
-    user = User.objects.get(pk=user_id)
-    user.profile.bio = 'Changed my views.py'
-    user.save()
-
-
 @login_required
 def settings(request):
     if request.method == 'POST':
@@ -43,7 +37,7 @@ def settings(request):
         description_form = DescriptionForm(request.POST, instance = request.user.profile)
         if profile_form.is_valid():
             ProfileSave(profile_form, profile)
-        if description_form.is_valid():
+        elif description_form.is_valid():
             description_form.save()
             print('description changed')
         else:

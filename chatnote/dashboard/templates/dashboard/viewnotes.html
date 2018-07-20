@@ -1,0 +1,81 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container">
+  <div class="row">
+    <div class="col-md-5">
+      <!--  Welcome Card -->
+      <div class="card">
+        <div class="card-header center-div">
+          <h5>Welcome, {{user.profile.first_name}}!</h5>
+        </div>
+        <div class="card-body">
+          <br>
+          <ul>
+            <h5>Personal Bio</h5>
+            <hr>
+            <p>{{user.profile.description}}</p>
+          </ul>
+        </div>
+      </div>
+
+    <!--  Note Cards (left)-->
+    <div class="card">
+      <div class="card-header center-div">
+        <h5>Notes</h5>
+      </div>
+      {% for note in notes %}
+      <div class="card-body">
+        <a style="text-decoration:none"class="clickable-card" href="/settings">
+          <br>
+        <ul>
+          <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean semper ipsum non ipsum euismod accumsan nec vitae velit. Suspendisse mattis.</p>
+          <hr>
+          <p>Tags: {{note.tags_list}}</p>
+        </ul>
+        </a>
+      </div>
+
+      {% endfor %}
+
+      <!--  Add new note-->
+      <div class="card-footer">
+        <form method="POST">
+        <h6>Add note</h6>
+        {% csrf_token %}
+        {{noteForm.description.errors}}
+        {{noteForm.tags.errors}}
+        <textarea name="{{noteForm.description.name}}" rows="4" cols="45"></textarea>
+        <input name="{{noteForm.tags.name}}" value="">
+        <button style="background-color:purple" type="submit" class="btn btn-success btn-sm">Add new note</button>
+        </form>
+      </div>
+    </div>
+    </div>
+
+    <!--  Full Note (right)-->
+    <div class="col-md-7 padding-0">
+      {% for x in 'xx'%}
+      <div class="card">
+        <div class="card-header center-div">
+          <h5>Long Note</h5>
+        </div>
+        <div class="card-body description-card">
+          <br>
+          <ul>
+            <h5>Note Description</h5>
+            <hr>
+            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi ut varius quam, id molestie purus. Aenean accumsan lorem sed mollis faucibus. Nullam iaculis, ipsum eu tincidunt sodales, elit quam sollicitudin nisl, id accumsan sem velit sit amet sem. Nam condimentum lobortis iaculis. Duis lacus purus, pulvinar eu odio non, volutpat tempor enim. Mauris eget suscipit ipsum. In lorem mi, blandit in nisi in, scelerisque hendrerit mauris. Pellentesque massa ex, rutrum in felis id, lacinia maximus leo. Fusce sit amet arcu lectus. Curabitur lacinia arcu sed quam egestas, at auctor ipsum sodales. Suspendisse maximus, libero in consectetur convallis, leo velit ultricies turpis, a accumsan nisl orci in dolor. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Aenean risus leo, ultricies et massa ut, scelerisque ultricies lorem.
+
+
+Donec ac ex eu nisi molestie scelerisque ut eget arcu. Sed lobortis libero vel nunc vestibulum interdum. Donec nec dignissim elit. Nulla semper magna non velit egestas blandit. Fusce a viverra eros, vel elementum mauris. Vivamus a ligula vel nibh maximus tincidunt consequat consectetur nisi. Sed tincidunt nibh eget ultrices pharetra. Suspendisse vulputate lectus dapibus diam rh</p>
+          </ul>
+        </div>
+      </div>
+          {% endfor %}
+    </div>
+</div>
+
+
+</div>
+{% endblock %}

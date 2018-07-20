@@ -9,6 +9,8 @@ class Tag(models.Model):
         return self.word
     def __repr__(self):
         return self.word
+
+        
 class Note(models.Model):
     user = models.ForeignKey(User, on_delete = models.CASCADE)
     description = models.CharField(max_length = 200)

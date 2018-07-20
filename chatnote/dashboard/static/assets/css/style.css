@@ -4,6 +4,9 @@
   border: 1px solid black
 }
 
+.btn-group{
+  display: inline;
+}
 .footer{
   position: relative;
   left:0;
@@ -12,7 +15,6 @@
   width: 100%;
   color:white;
   background-color:#a6a6a6;
-
 }
 .vcenter{
   display: flex;

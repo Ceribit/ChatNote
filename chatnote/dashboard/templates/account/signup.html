@@ -7,6 +7,9 @@
       {% for field in user_form %}
             {% csrf_token %}
         {{field.errors}}
+        {% if form.errors %}
+        Incorrect input
+        {% endif %}
         <label> {{field.label}} </label>
         <input type="{%if 'Password' in field.label %}password{% else %}input{% endif %}" name="{{field.name}}" class="form-control">
       {% endfor %}
