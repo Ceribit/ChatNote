@@ -10,7 +10,10 @@
       <div class="row">
         <h2 class="btn-group"> {{targetuser.username}} </h2>
           {% if not targetuser.username == user.username %}
-        <button type="button" class="btn btn-sm btn-primary"> Send a friend request </button>
+          <form action='/add_friend/{{targetuser.id}}' method="POST">
+            {% csrf_token %}
+              <input type="submit" class="btn btn-sm btn-primary" value="Send a friend request">
+          </form>
           {% endif %}
       </div>
 
@@ -29,6 +32,31 @@
       </div>
     </div>
   </div>
+  <div class="col-md-4">
+
+  <div class="card">
+    <div class="card-header center-div">
+      <h5>Notes</h5>
+    </div>
+    {% for note in notes %}
+    {% if note.privacy == 'PUBLIC' or note.privacy == 'FRIEND' %}
+    <div class="card-body">
+      <a style="text-decoration:none"class="clickable-card" href="/settings">
+        <br>
+      <ul>
+        {{note.description}}
+        <hr>
+        <p>Tags: {{note.tags_list}}</p>
+        </p>
+      </ul>
+      </a>
+    </div>
+    {% endif %}
+    {% endfor %}
+   </div>
+ </div>
+
   </div>
+
 </div>
 {% endblock %}

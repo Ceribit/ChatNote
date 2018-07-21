@@ -19,14 +19,11 @@ def home(request):
     }
     return render(request, 'dashboard/home.html', context)
 
+
 @login_required
 def notes(request):
     """ List all notes that the user has created
     """
-    if request.user.profile.add_friend(User.objects.get(username = "testbot")):
-        print("TRRUE")
-    else:
-        print("NOT")
     #request.user.profile.remove_friend("testbot")
     if not request.user.is_authenticated:
         return_to_login(request)
@@ -36,6 +33,7 @@ def notes(request):
             newNote = Note.objects.create(
                 user = request.user,
                 description = noteForm.cleaned_data['description'],
+                privacy = noteForm.cleaned_data['privacy'],
             )
             for splitTag in noteForm.cleaned_data['tags'].split():
                 if not Tag.objects.filter(word = splitTag.lower()).exists():
@@ -54,6 +52,7 @@ def notes(request):
     }
     for note in context['notes']:
         note.loadTagsList()
+        print(note.user.username +"-"+ str(note.privacy))
     return render(request, 'dashboard/viewnotes.html', context)
 
 
@@ -61,10 +60,14 @@ def notes(request):
 def profile(request, username):
     """ Displays a User's public profile
     """
+    target_user = User.objects.get(username = username)
     context = {
-        'user':request.user,
-        'targetuser':User.objects.get(username = username),
+        'user' : request.user,
+        'targetuser': target_user,
+        'notes' : list(Note.objects.filter(user=target_user).distinct()),
     }
+    for note in context['notes']:
+        note.loadTagsList()
     return render(request, 'dashboard/profile.html', context)
 
 

@@ -21,6 +21,22 @@
   vertical-align: middle
 }
 
+.message{
+  height: 30px;
+  padding-top: 8px;
+  padding-bot: 8px;
+  margin-left: 1%;
+}
+
+.btn-friend-spacing{
+    float:right;
+    margin-right: 5px;
+}
+
+.no-padding{
+  padding-left:0 !important;
+}
+
 .searchbar{
   color: black;
   height:30px;

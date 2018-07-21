@@ -1,0 +1,39 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container">
+  <div class="row col-md-8">
+    <div class="card">
+      <div class="card-header">
+        <h5>Notifications</h5>
+      </div>
+      {% for notification in notifications %}
+      <div class="card-body">
+         {% if notification.type ==  2 %}
+         <div class="message">
+           <form action='notifications/complete_request/{{notification.from_user.id}}' method="post">
+             <label>
+               Friend Request sent by {{notification.from_user}}
+             </label>
+             {% csrf_token %}
+             <button type="submit" name="response_type" class="btn btn-danger
+             btn-sm btn-friend-spacing" value="Delete">
+               Delete</button>
+             <button type="submit" name="response_type" class="btn btn-success
+             btn-sm btn-friend-spacing" value="Accept">
+               Accept</button>
+           </form>
+         </div>
+         {%else%}
+          Message sent by Irec
+         {%endif%}
+        </p>
+      </div>
+      {% endfor%}
+    </div>
+
+  </div>
+</div>
+
+
+{% endblock %}

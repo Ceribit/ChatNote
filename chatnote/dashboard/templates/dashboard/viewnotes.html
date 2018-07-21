@@ -29,13 +29,14 @@
         <a style="text-decoration:none"class="clickable-card" href="/settings">
           <br>
         <ul>
-          <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean semper ipsum non ipsum euismod accumsan nec vitae velit. Suspendisse mattis.</p>
+          {{note.description}}
           <hr>
           <p>Tags: {{note.tags_list}}</p>
+          <p>Privacy: {{note.privacy|title}}
+          </p>
         </ul>
         </a>
       </div>
-
       {% endfor %}
 
       <!--  Add new note-->
@@ -46,7 +47,24 @@
         {{noteForm.description.errors}}
         {{noteForm.tags.errors}}
         <textarea name="{{noteForm.description.name}}" rows="4" cols="45"></textarea>
+        <div class="container">
+
+        <label>Tags: </label>
         <input name="{{noteForm.tags.name}}" value="">
+        <br>
+        <div name="{{noteForm.privacy.name}}"class="radio">
+          <fieldset>
+
+          <label class="no-padding">Privacy:</label>
+          <label><input type="radio" name="{{noteForm.privacy.name}}" value="PRIVATE">
+            Private</label>
+          <label><input type="radio" name="{{noteForm.privacy.name}}" value="FRIEND">
+            Friends Only</label>
+          <label><input type="radio" name="{{noteForm.privacy.name}}" value="PUBLIC">
+            Public</label>
+        </fieldset>
+        </div>
+      </div>
         <button style="background-color:purple" type="submit" class="btn btn-success btn-sm">Add new note</button>
         </form>
       </div>

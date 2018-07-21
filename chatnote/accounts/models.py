@@ -12,22 +12,23 @@ NOTIFICATION_TYPES = (
 
 """ Notification Model """
 class Notification(models.Model):
-    from_user = models.ForeignKey(User,on_delete=models.CASCADE)
+    from_user = models.ForeignKey(User,related_name='FROM',on_delete=models.PROTECT)
+    target_user = models.ForeignKey(User,related_name='TO', on_delete=models.PROTECT)
     message = models.CharField(max_length = 120)
     type = models.IntegerField(choices = NOTIFICATION_TYPES)
     created = models.DateTimeField(auto_now_add=True, editable=False)
 
     def __str__(self):
-        return ("Friend request to " + self.from_user)
+        return ( self.from_user.username + "\'s friend request to " + self.target_user.username)
 
 
 """ Friend Model """
 class Friend(models.Model):
-    target_user = models.ForeignKey(User, on_delete=models.CASCADE)
+    target_user = models.ForeignKey(User, on_delete=models.PROTECT)
     created = models.DateTimeField(auto_now_add=True, editable=False)
 
     def __str__(self):
-        return self.target_user.username
+        return ("to " + self.target_user.username)
 
 
 """ User Profile Model """
@@ -40,19 +41,23 @@ class Profile(models.Model):
                                 help_text='Optional.')
     email = models.EmailField(max_length = 254)
     birth_date = models.DateField(null=True, blank = True)
-    friends = models.ManyToManyField(Friend)
-    notifications = models.ForeignKey(Notification, on_delete=models.CASCADE)
+    friends = models.ManyToManyField(Friend, null=True, blank = True)
 
     #Notification Methods
     def send_friend_request(self, target_user, message, type):
-        if self.friends.filter(target_user=target_user).exists():
-            target_user.profile.notifications.create(
-            from_user = self,
+        if User.objects.filter(username=target_user).exists():
+            print(target_user)
+            Notification.objects.create(
+            from_user = self.user,
+            target_user = target_user,
             message = message,
             type = type
-            )
+            ).save
+            print('Notification added')
             return True
         else:
+            print('Request not actually sent')
+            print()
             return False
 
     def accept_friend_request(self, target_user):

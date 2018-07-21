@@ -5,7 +5,7 @@ class AddNoteForm(forms.ModelForm):
     tags = forms.CharField(max_length=25)
     class Meta:
         model = Note
-        fields = ('tags', 'description', )
+        fields = ('tags', 'description', 'privacy')
 
 class SearchForm(forms.Form):
     query = forms.CharField(max_length=30)

@@ -30,28 +30,29 @@
       </div>
       <br>
 
-        <div class="card fullcard col-md-1">
+        <div class="card fullcard col-md-1 col-sm-1 col-lg-1">
           <br>
           <ul class="nav">
             <li class="active"> <a href="/">Home</a> </li>
             <li><a href="/notes">My Notes</a></li>
             <li><a href="/profile/{{user.username}}">Profile</a></li>
             <li><a href="/friends">Friends</a></li>
+            <li><a href="/notifications">Notifications</a><li>
             <li><a href="/settings">Settings</a></li>
             <li><a href="/logout">Log Out</a></li>
 
           </ul>
         </div>
-        {% block content %}
 
-        {% endblock %}
       </body>
+      {% block content %}
 
+      {% endblock %}
     </div>
-    <div class="col-md-12 footer">
-      <p> Channote: Created by Ceri</p>
-    </div>
+
 </div>
-
+<div class="col-md-12 footer">
+  <p> Channote: Created by Ceri</p>
+</div>
 
 </html>
