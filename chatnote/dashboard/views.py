@@ -2,6 +2,7 @@ from django.contrib.auth.forms import AuthenticationForm, UserCreationForm
 from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import authenticate, login
+from django.db.models import Q
 from django.shortcuts import render, redirect
 from .forms import AddNoteForm
 from .models import Note, Tag
@@ -12,11 +13,22 @@ def home(request):
     if not request.user.is_authenticated:
         print("Not authenticated")
         return return_to_login(request)
-
     """ Home Page """
+    user_notes = list(Note.objects.filter(user=request.user).distinct())
+    friends = list(request.user.profile.friends.all())
+
+    friends_notes = [list(Note.objects.filter(
+                 Q(user=friend.target_user, privacy="PUBLIC") |
+                 Q(user=friend.target_user, privacy="FRIEND")).distinct())
+                    for friend in friends]
     context = {
         'user' : request.user,
+        'user_notes': user_notes,
+        'friends': friends,
+        'friends_notes': friends_notes,
+
     }
+    print(friends_notes)
     return render(request, 'dashboard/home.html', context)
 
 
@@ -61,10 +73,16 @@ def profile(request, username):
     """ Displays a User's public profile
     """
     target_user = User.objects.get(username = username)
+    if request.user.profile.friends.filter(target_user=target_user).exists():
+        is_friend = True
+    else:
+        is_friend = False
+
     context = {
         'user' : request.user,
         'targetuser': target_user,
         'notes' : list(Note.objects.filter(user=target_user).distinct()),
+        'is_friend' : is_friend,
     }
     for note in context['notes']:
         note.loadTagsList()

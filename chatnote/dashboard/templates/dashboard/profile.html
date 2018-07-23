@@ -10,10 +10,20 @@
       <div class="row">
         <h2 class="btn-group"> {{targetuser.username}} </h2>
           {% if not targetuser.username == user.username %}
-          <form action='/add_friend/{{targetuser.id}}' method="POST">
-            {% csrf_token %}
-              <input type="submit" class="btn btn-sm btn-primary" value="Send a friend request">
-          </form>
+
+            {% if is_friend  %}
+              <form action='/remove_friend/{{targetuser.id}}' method="POST">
+                {% csrf_token %}
+              <button type="button" class="btn btn-info btn-sm">Friends</button>
+              <input type="submit" class="btn btn-sm btn-danger" value="Remove Friend">
+              </form>
+            {% else %}
+              <form action='/add_friend/{{targetuser.id}}' method="POST">
+                {% csrf_token %}
+                <input type="submit" class="btn btn-sm btn-primary" value="Send a friend request">
+              </form>
+
+            {% endif %}
           {% endif %}
       </div>
 

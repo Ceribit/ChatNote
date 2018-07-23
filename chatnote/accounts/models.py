@@ -83,21 +83,21 @@ class Profile(models.Model):
                 return True
             else:
                 if self.friends.filter(target_user = target_user).exists():
-                    print("Friendship found from " + self.user)
+                    print("Friendship found from " + self.user.username)
                 if target_user.profile.friends.filter(target_user = self.user).exists():
-                    print("Friendship found from " + target_user)
+                    print("Friendship found from " + target_user.username)
                 return False
         return False
 
     def remove_friend(self, target_user):
         if self.friends.filter(target_user=User.objects.get(username=target_user)).exists():
             oldfriend = self.friends.get(target_user=User.objects.get(username=target_user))
-        else: oldfriend = 0
+        else: oldfriend = False
         if oldfriend:
             ex_friend = oldfriend
             ex_friend.delete()
-            #stranger = User.objects.get(username=target_user)
-            #stranger.profile.friends.filter(target_user=self.username).delete()
+            stranger = User.objects.get(username=target_user)
+            stranger.profile.friends.filter(target_user=self.user).delete()
             return True
         else:
             return False

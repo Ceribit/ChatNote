@@ -6,8 +6,7 @@ Upcoming updates:
 2) Home page will display your own notes and notes created by friends
 3) Add friend groups
 4) Improve search bar to redirect to a search page if the user doesn't exist
-5) Add friend management options (delete friends)
-6) Add ability to change account info and make password verification required
+5) Add ability to change account info and make password verification required
    to change info
 
 Issues:
@@ -24,7 +23,7 @@ Implemented features:
 3) Notes with a manytomany link with tags
   a) Notes displayed with cards and can be added in the home screen
 4) Basic search bar (Enter user and it brings you to their profile page)
-5) Basic options to have a friend and accept
+5) Added basic friend functionality (add/remove friends)
 
 Completed Updates:
 x) Existence of friends

@@ -47,7 +47,7 @@ def complete_request(request, id):
                 notification.delete()
     return redirect('/notifications')
 
-    
+
 @login_required
 def send_request(request, id):
     if User.objects.filter(id = id).exists():
@@ -61,6 +61,18 @@ def send_request(request, id):
         print("ID does not exist")
 
     return redirect('/friends')
+
+@login_required
+def remove_friend(request, id):
+    if User.objects.filter(id = id).exists():
+        target_user = User.objects.get(id=id)
+        request.user.profile.remove_friend(target_user)
+        print('Friend removed')
+    else:
+        print("Friend not removed")
+
+    return redirect('/profile/' +  target_user.username)
+
 
 @login_required
 def settings(request):

@@ -19,4 +19,36 @@
   </div>
 
 </div>
+<div class="container">
+  <div class="row">
+
+    {% for note in user_notes%}
+    <div class="container col-md-4">
+      <div class="card">
+        <div class="card-header">
+        </div>
+        <div class="card-body">
+          <p> {{note.description}} </p>
+          <p> By: {{user}}</p>
+        </div>
+      </div>
+    </div>
+    {% endfor %}
+
+    {% for user in friends_notes %}
+      {% for note in user%}
+      <div class="container col-md-4">
+          <div class="card">
+            <div class="card-header">
+            </div>
+            <div class="card-body">
+              <p> {{note.description}} </p>
+              <p> {{note.user}}</p>
+          </div>
+          </div>
+      </div>
+      {%endfor%}
+    {% endfor %}
+  </div>
+</div>
 {% endblock %}
