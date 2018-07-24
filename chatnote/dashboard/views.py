@@ -62,11 +62,53 @@ def notes(request):
         'noteForm' : AddNoteForm(),
         'notes' : list(Note.objects.filter(user=request.user).distinct())
     }
-    for note in context['notes']:
-        note.loadTagsList()
-        print(note.user.username +"-"+ str(note.privacy))
     return render(request, 'dashboard/viewnotes.html', context)
 
+@login_required
+def edit_note(request, id):
+    if not request.user.is_authenticated:
+        return_to_login(request)
+    elif request.method == 'POST':
+        if request.POST.get('edited_note'):
+            description = request.POST.get('edited_note')
+            note = Note.objects.get(id=id)
+            note.description = description
+            print(note.description)
+            note.save()
+            return redirect('notes')
+        else:
+            noteForm = AddNoteForm(data=request.POST)
+            if noteForm.is_valid():
+                newNote = Note.objects.create(
+                    user = request.user,
+                    description = noteForm.cleaned_data['description'],
+                    privacy = noteForm.cleaned_data['privacy'],
+                )
+                for splitTag in noteForm.cleaned_data['tags'].split():
+                    if not Tag.objects.filter(word = splitTag.lower()).exists():
+                        tag = Tag(word = splitTag.lower())
+                        tag.save()
+                    else:
+                        tag = Tag.objects.get(word=splitTag.lower())
+                    newNote.tags.add(tag)
+                newNote.save()
+            else:
+                print(noteForm.errors)
+    context = {
+        'user' : request.user,
+        'noteForm' : AddNoteForm(),
+        'notes' : list(Note.objects.filter(user=request.user).distinct()),
+        'id': id,
+    }
+    return render(request, 'dashboard/editnotes.html', context)
+
+
+
+@login_required
+def delete_note(request, id):
+    if request.user.is_authenticated:
+        Note.objects.get(user = request.user, id=id).delete()
+    return redirect('notes')
 
 @login_required
 def profile(request, username):

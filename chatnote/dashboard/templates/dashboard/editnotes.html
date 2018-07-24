@@ -29,18 +29,36 @@
       <div class="card-body">
         <a style="text-decoration:none"class="clickable-card">
         <ul>
-          {{note.description}}
+          <br>
+          {% if note.id == id %}
+          <form action="{% url 'edit_note' id %}" method="POST">
+            {% csrf_token %}
+            <textarea name="edited_note" rows="8" cols="40">{{note.description}}</textarea>
+            <input style="visibility: hidden; height:0;" type="submit" id="submit-form" class="hidden">
+          </form>
+          {% else %}
+          <p>
+            {{note.description}}
+          </p>
+          {% endif %}
           <hr>
+
           <form action="{% url 'delete_note' note.id %}" method="POST">
             {% csrf_token %}
             <button type="submit" name="button" class="btn btn-default
             btn-warning btn-friend-spacing">Delete</button>
           </form>
+          {% if note.id == id %}
+          <label for="submit-form" class="btn-friend-spacing btn btn-success">
+            Save
+          </label>
+          {% else %}
           <form action="{% url 'edit_note' note.id %}" method="post">
             {% csrf_token %}
           <button type="submit" name="button" class="btn btn-friend-spacing">
           Edit</button>
           </form>
+          {% endif %}
           <p>Tags:
             {% for tag in note.tags.all%}
             {{tag}}

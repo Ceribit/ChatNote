@@ -8,28 +8,36 @@
         <h5>Notifications</h5>
       </div>
       {% for notification in notifications %}
-      <div class="card-body">
          {% if notification.type ==  2 %}
-         <div class="message">
-           <form action='notifications/complete_request/{{notification.from_user.id}}' method="post">
-             <label>
-               Friend Request sent by {{notification.from_user}}
-             </label>
-             {% csrf_token %}
-             <button type="submit" name="response_type" class="btn btn-danger
-             btn-sm btn-friend-spacing" value="Delete">
-               Delete</button>
-             <button type="submit" name="response_type" class="btn btn-success
-             btn-sm btn-friend-spacing" value="Accept">
-               Accept</button>
-           </form>
+         <div class="card-body">
+           <div class="message">
+             <form action='notifications/complete_request/{{notification.from_user.id}}' method="post">
+               <label>
+                 Friend Request sent by {{notification.from_user}}
+               </label>
+               {% csrf_token %}
+               <button type="submit" name="response_type" class="btn btn-danger
+               btn-sm btn-friend-spacing" value="Delete">
+                 Delete</button>
+               <button type="submit" name="response_type" class="btn btn-success
+               btn-sm btn-friend-spacing" value="Accept">
+                 Accept</button>
+             </form>
+           </div>
          </div>
-         {%else%}
-          Message sent by Irec
+         {%elif notification.type == 1 and not notification.read_by_user %}
+         <div class="card-body">
+           Message sent by Irec
+         </div>
          {%endif%}
-        </p>
-      </div>
+
       {% endfor%}
+      {% if  notifications %}
+      Nothing to see here
+      {% endif %}
+      <div class="card-footer">
+
+      </div>
     </div>
 
   </div>

@@ -16,7 +16,10 @@
                 {% csrf_token %}
               <button type="button" class="btn btn-info btn-sm">Friends</button>
               <input type="submit" class="btn btn-sm btn-danger" value="Remove Friend">
-              </form>
+              <a href="/messages/{{targetuser.id}}">
+              <button type="button" class="btn btn-info btn-sm">Message User</button>
+              </a>
+            </form>
             {% else %}
               <form action='/add_friend/{{targetuser.id}}' method="POST">
                 {% csrf_token %}

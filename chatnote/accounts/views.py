@@ -55,7 +55,8 @@ def send_request(request, id):
         request.user.profile.send_friend_request(
             target_user=target_user,
             message="N/A",
-            type = 2)
+            type = 2,
+            read_by_user = True)
         print('Request sent')
     else:
         print("ID does not exist")
@@ -102,6 +103,36 @@ def notifications(request):
     print(notifications_list)
     return render(request, 'account/notifications.html', context)
 
+@login_required
+def messages(request, id = 0):
+    if User.objects.filter(id=id).exists():
+        target_user = User.objects.get(id=id)
+        if request.user.profile.friends.filter(target_user=target_user).exists():
+            if request.method == 'POST':
+                message = request.POST.get('message')
+                request.user.profile.send_message(target_user, message, 1)
+            user_messages = Notification.objects.filter(
+                            from_user = request.user,
+                            target_user = target_user)
+            friend_messages = Notification.objects.filter(
+                            from_user = target_user,
+                            target_user = request.user)
+            friend_messages.update(read_by_user = True)
+            print("---------------------------")
+            combined_messages = user_messages | friend_messages
+            messages = combined_messages.distinct().order_by('created')
+            context = {
+                'user' : request.user,
+                'target_user' : target_user,
+                'messages' : messages,
+                'friends' : request.user.profile.get_friends(),
+            }
+            return render(request, 'account/messages.html', context)
+    context = {
+        'user' : request.user,
+        'friends' : request.user.profile.get_friends(),
+    }
+    return render(request, 'account/messages.html', context)
 
 def register_profile(profile, profile_form):
     profile.first_name = profile_form.cleaned_data['first_name']

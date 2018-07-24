@@ -9,5 +9,6 @@ urlpatterns = [
     path('remove_friend/<int:id>', views.remove_friend, name='remove_friend'),
     path('notifications', views.notifications, name='notifications'),
     path('notifications/complete_request/<int:id>', views.complete_request, name='complete_request'),
-
+    path('messages', views.messages, name = 'messages'),
+    path('messages/<int:id>', views.messages, name = 'messages'),
 ]

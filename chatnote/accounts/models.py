@@ -17,9 +17,10 @@ class Notification(models.Model):
     message = models.CharField(max_length = 120)
     type = models.IntegerField(choices = NOTIFICATION_TYPES)
     created = models.DateTimeField(auto_now_add=True, editable=False)
+    read_by_user = models.BooleanField(default = False)
 
     def __str__(self):
-        return ( self.from_user.username + "\'s friend request to " + self.target_user.username)
+        return ( self.from_user.username + "\'s request to " + self.target_user.username)
 
 
 """ Friend Model """
@@ -44,6 +45,21 @@ class Profile(models.Model):
     friends = models.ManyToManyField(Friend, null=True, blank = True)
 
     #Notification Methods
+    def send_message(self, target_user, message, type):
+        if self.friends.filter(target_user=target_user).exists():
+            print("Message being created")
+            Notification.objects.create(
+            from_user = self.user,
+            target_user = target_user,
+            message = message,
+            type = type
+            )
+            print("Message created")
+            return True
+        else:
+            print("Message not created")
+            return False
+
     def send_friend_request(self, target_user, message, type):
         if User.objects.filter(username=target_user).exists():
             print(target_user)
@@ -57,7 +73,6 @@ class Profile(models.Model):
             return True
         else:
             print('Request not actually sent')
-            print()
             return False
 
     def accept_friend_request(self, target_user):

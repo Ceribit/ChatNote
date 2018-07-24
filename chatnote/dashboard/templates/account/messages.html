@@ -1,0 +1,50 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container">
+  <div class="row col-md-8">
+    <div class="card">
+      <div class="card-header">
+        <h5>Messages</h5>
+        {% if target_user  %}
+        <p>
+          You are messaging {{target_user}}
+          <a href="/messages"><button type="button" class="btn btn-sm btn-info">Go Back</button></a>
+        </p>
+        {% else %}
+        <p>
+          This is just your message box
+        </p>
+        {% endif %}
+      </div>
+        {% if target_user %}
+          {% for message in messages %}
+            <div class="card-body conversation-message">
+              <label>{{message.message}}</label>
+              <label class="conversation-message-label">{{message.from_user.profile.first_name}}</label>
+            </div>
+          {% endfor %}
+          {% else %}
+          {% for friend in friends %}
+            <div class="card-body conversation-message">
+              <label><a href="/messages/{{friend.id}}"> Message {{friend}}</a></label>
+            </div>
+          {% endfor %}
+        {% endif %}
+      <div class="card-footer">
+        {% if target_user %}
+        <form action="{% url 'messages' target_user.id %}" method="POST">
+          {% csrf_token %}
+          <textarea name="message" rows="4" cols="40"></textarea>
+          <br>
+          <button class="btn btn-success">Send Message</button>
+        </form>
+        {% endif %}
+      </div>
+    </div>
+
+  </div>
+</div>
+
+
+{% endblock %}
